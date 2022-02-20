@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   @ViewChild("sidefacecolor") sidefacecolor: ElementRef | undefined;
   @ViewChild("topfacecolor") topfacecolor: ElementRef | undefined;
   @ViewChild("preview") previewImg: ElementRef | undefined;
-  @ViewChild("filename") filenameInput: ElementRef | undefined;
+  @ViewChild("nameinput") filenameInput: ElementRef | undefined;
   @ViewChild("edgeblendCheck") edgeblendCheck: ElementRef | undefined;
 
 
@@ -91,6 +91,7 @@ export class HomeComponent implements OnInit {
 
   onChangeName(): void {
     this.filename = this.filenameInput?.nativeElement.value;
+    console.log(this.filename)
   }
 
   onClickRandom(): void {
