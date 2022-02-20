@@ -67,7 +67,19 @@ export class HomeComponent implements OnInit {
     if (!colorsInitialized) {
       return;
     }
-    this.drawingService.drawOutline(ctx, this.canvasSize,
+    this.drawingService.drawFullTile(ctx, this.canvasSize,
+      this.edgecolor?.nativeElement.value, this.sidefacecolor?.nativeElement.value,
+      this.topfacecolor?.nativeElement.value, this.edgeblendCheck?.nativeElement.checked);
+    this.drawingService.drawWalls(ctx, this.canvasSize,
+      this.edgecolor?.nativeElement.value, this.sidefacecolor?.nativeElement.value,
+      this.topfacecolor?.nativeElement.value, this.edgeblendCheck?.nativeElement.checked);
+    this.drawingService.drawUpperSlab(ctx, this.canvasSize,
+      this.edgecolor?.nativeElement.value, this.sidefacecolor?.nativeElement.value,
+      this.topfacecolor?.nativeElement.value, this.edgeblendCheck?.nativeElement.checked);
+    this.drawingService.drawLowerSlab(ctx, this.canvasSize,
+      this.edgecolor?.nativeElement.value, this.sidefacecolor?.nativeElement.value,
+      this.topfacecolor?.nativeElement.value, this.edgeblendCheck?.nativeElement.checked);
+    this.drawingService.drawQuarterSlabs(ctx, this.canvasSize,
       this.edgecolor?.nativeElement.value, this.sidefacecolor?.nativeElement.value,
       this.topfacecolor?.nativeElement.value, this.edgeblendCheck?.nativeElement.checked);
     this.drawingService.drawSlopeBackRight(ctx, this.canvasSize,
