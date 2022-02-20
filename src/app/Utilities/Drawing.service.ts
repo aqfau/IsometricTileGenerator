@@ -8,7 +8,9 @@ export class DrawingService {
 constructor() { }
 
 drawBackLeftWall() : void
-{}
+{
+  
+}
 
 drawBackRightHalfWall() : void
 {}
