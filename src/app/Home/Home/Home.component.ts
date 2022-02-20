@@ -27,6 +27,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit()
+  {
+    this.onClickDraw();
+  }
+
   onClickIncrement(amount : number)
   {
     this.canvasSize += amount;
