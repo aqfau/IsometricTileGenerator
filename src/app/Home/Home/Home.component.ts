@@ -36,15 +36,15 @@ export class HomeComponent implements OnInit {
 
   onClickIncrement(amount: number) {
     this.canvasSize += amount;
+    console.log(this.canvasSize);
     if (this.canvasSizeInput) {
       this.canvasSizeInput.nativeElement.value = this.canvasSize;
     }
   }
 
   onChangeSize(): void {
-    console.log(this.canvasSizeInput);
     if (this.canvasSizeInput) {
-      this.canvasSize = this.canvasSizeInput.nativeElement.value;
+      this.canvasSize = Number(this.canvasSizeInput.nativeElement.value);
     }
   }
 
@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit {
       console.log("Ctx call failed");
       return;
     }
+
+    ctx.clearRect(0, 0, this.canvasSize * 4 + 80, this.canvasSize * 4 + 80);
 
     let c = this.canvas.nativeElement as HTMLCanvasElement;
 

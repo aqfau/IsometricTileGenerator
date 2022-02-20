@@ -6,6 +6,8 @@ import { Vector2 } from '../ViewModel/Vector2';
 })
 export class DrawingService {
 
+  margin : number = 20;
+
   constructor() { }
 
   drawPath(ctx: any, edgecolor: string, facecolor: string, path: Vector2[], blendBorder: boolean) {
@@ -30,35 +32,87 @@ export class DrawingService {
   }
 
   drawBackLeftWall(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder : boolean): void {
-    let startX = 20;
-    let startY = 360;
+    let startX = this.margin;
+    let startY = (size + this.margin) * 3;
     let ratio = .5;
+    let xSubtractor = (1 - ratio) * (size / 2)
+    let ySubtractor = (1 - ratio) * (size / 4)
 
     // Top Side
-    this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, .5, .5);
+    this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, 1, .5);
     // Left Side
     
     this.drawLeftFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, 1, .5);
 
     // Right Side
-    this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, 1, .5);
+    this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX - xSubtractor, startY - ySubtractor, 1, 1);
   }
 
   drawWalls(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder : boolean)
   {
     this.drawBackLeftWall(ctx, size,edgecolor, sidecolor, topcolor, blendBorder);
+    this.drawBackRightWall(ctx, size,edgecolor, sidecolor, topcolor, blendBorder);
+    this.drawFrontRightWall(ctx, size,edgecolor, sidecolor, topcolor, blendBorder);
+    this.drawFrontLeftWall(ctx, size,edgecolor, sidecolor, topcolor, blendBorder);
   }
 
-  drawBackRightHalfWall(): void { }
+  drawFrontRightWall(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder : boolean): void { 
+    let startX = this.margin + size / 4 + (size + this.margin); //margin + shift + space
+    let startY = (size + this.margin) * 3; + size / 8;
+    let ratio = .5;
+    let xSubtractor = (1 - ratio) * (size / 2)
+    let ySubtractor = (1 - ratio) * (size / 4)
 
-  drawFrontRightHalfWall(): void { }
+    // Top Side
+    this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, 1, .5);
+    // Left Side
+    
+    this.drawLeftFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, 1, .5);
 
-  drawFrontLeftHalfWall(): void { }
+    // Right Side
+    this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX - xSubtractor, startY - ySubtractor, 1, 1);
+  }
+
+  drawFrontLeftWall(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder : boolean): void
+  {
+    let startX = this.margin - size / 4 + (this.margin + size) * 3; //margin + shift + space
+    let startY = (size + this.margin) * 3 + size / 8;
+    let ratio = .5;
+    let xSubtractor = (1 - ratio) * (size / 2)
+    let ySubtractor = (1 - ratio) * (size / 4)
+
+    // Top Side
+    this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, .5, 1);
+    // Left Side
+    
+    this.drawLeftFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX + xSubtractor, startY - ySubtractor, 1, 1);
+
+    // Right Side
+    this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, 1, .5);
+  }
+
+  drawBackRightWall(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder : boolean): void 
+  { 
+    let startX = this.margin + (this.margin + size) * 2; //margin + shift + space
+    let startY = (this.margin + size) * 3;
+    let ratio = .5;
+    let xSubtractor = (1 - ratio) * (size / 2)
+    let ySubtractor = (1 - ratio) * (size / 4)
+
+    // Top Side
+    this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, .5, 1);
+    // Left Side
+    
+    this.drawLeftFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX + xSubtractor, startY - ySubtractor, 1, 1);
+
+    // Right Side
+    this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, 1, .5);
+  }
 
   drawLowerSlab(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean): void 
   { 
-    let startX = 260;
-    let startY = 20;
+    let startX = this.margin + (this.margin + size) * 2;
+    let startY = this.margin;
     let ratio = .5;
     startY += ((size / 2) * ratio);
 
@@ -74,8 +128,8 @@ export class DrawingService {
 
   drawUpperSlab(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean): void 
   {
-    let startX = 140;
-    let startY = 20;
+    let startX = this.margin + (this.margin + size);
+    let startY = this.margin;
 
     // Top Side
     this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, 1, 1);
@@ -89,8 +143,8 @@ export class DrawingService {
 
   drawQuarterSlabs(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean)
   {
-    let startX = 20;
-    let startY = 260;
+    let startX = this.margin;
+    let startY = this.margin + (this.margin + size) * 2;
     let ratio = .25;
     // Top Side
     this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, 1, 1);
@@ -101,8 +155,7 @@ export class DrawingService {
     // Right Side
     this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, ratio, 1);
 
-    startX = 140;
-    startY = 260;
+    startX += (this.margin + size);
     startY += ((size / 4) * ratio);
     
 
@@ -115,8 +168,7 @@ export class DrawingService {
     // Right Side
     this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, ratio, 1);
 
-    startX = 260;
-    startY = 260;
+    startX += (this.margin + size);
     startY += ((size / 4) * ratio) * 2;
 
     // Top Side
@@ -128,8 +180,7 @@ export class DrawingService {
     // Right Side
     this.drawRightFullTile(ctx, size, edgecolor, sidecolor, blendBorder, startX, startY, ratio, 1);
 
-    startX = 380;
-    startY = 260;
+    startX += (this.margin + size);
     startY += ((size / 4) * ratio) * 3;
 
     // Top Side
@@ -144,8 +195,8 @@ export class DrawingService {
 
   //back right to front left
   drawSlopeBackRight(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean): void {
-    let startX = 0;
-    let startY = 120;
+    let startX = this.margin;
+    let startY = this.margin + (this.margin + size);
     //topface
     let path : Vector2[] = [];
     path.push(new Vector2(size / 2 - 1 + startX, startY));
@@ -167,8 +218,8 @@ export class DrawingService {
   }
 
   drawSlopeBackLeft(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean): void {
-    let startX = 120;
-    let startY = 120;
+    let startX = this.margin + (this.margin + size);
+    let startY = this.margin + (this.margin + size);
     //topface
     let path : Vector2[] = [];
     path.push(new Vector2(size / 2 - 1 + startX, startY));
@@ -192,8 +243,8 @@ export class DrawingService {
 
   drawSlopeFrontRight(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean): void {
     //DrawRightSide
-    let startX = 360;
-    let startY = 120;
+    let startX = this.margin + (this.margin + size) * 2;
+    let startY = this.margin + (this.margin + size);
     
     let path : Vector2[] = [];
     path.push(new Vector2(size / 2 + startX, size / 2 + startY));
@@ -214,9 +265,9 @@ export class DrawingService {
   }
 
   drawSlopeFrontLeft(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean): void {
-    //DrawRightSide
-    let startX = 240;
-    let startY = 120;
+    //DrawRightSidelet 
+    let startX = this.margin + (this.margin + size) * 3;
+    let startY = this.margin + (this.margin + size);
 
     let path : Vector2[] = [];
     path.push(new Vector2(size / 2 + startX, size / 2 + startY));
@@ -237,8 +288,8 @@ export class DrawingService {
   }
 
   drawFullTile(ctx: any, size: number, edgecolor: string, sidecolor: string, topcolor: string, blendBorder: boolean) {
-    let startX = 20;
-    let startY = 20;
+    let startX = this.margin;
+    let startY = this.margin;
 
     // Top Side
     this.drawTopFullTile(ctx, size, edgecolor, topcolor, blendBorder, startX, startY, 1, 1);
@@ -252,12 +303,15 @@ export class DrawingService {
   }
 
   drawLeftFullTile(ctx: any, size: number, edgecolor: string, sidecolor: string, blendBorder: boolean, startX : number, startY : number, ratio : number, wallRatio : number)
-  {
+  { 
+    // top-left corner => counter clockwise
     let path = [];
     path.push(new Vector2(startX, size / 4 - 1 + startY));
     path.push(new Vector2(startX, (size / 4 * 3 - 1) - (size / 2) * (1 - ratio) + startY));
-    path.push(new Vector2(size / 2 - 1 + startX, (size - 1) - (1 - ratio) * (size / 2) + startY));
-    path.push(new Vector2(size / 2 - 1 + startX, size / 2 + startY));
+    path.push(new Vector2((size / 2 - 1) - (1 - wallRatio) * (size / 2) + startX, 
+      (size - 1) - (1 - ratio) * (size / 2) - (1 - wallRatio) * (size / 4) + startY));
+    path.push(new Vector2((size / 2 - 1) - (1 - wallRatio) * (size / 2) + startX, 
+      (size / 2) - (1 - wallRatio) * (size / 4) + startY));
     path.push(new Vector2(startX, size / 4 + startY));
     this.drawPath(ctx, edgecolor, sidecolor, path, blendBorder);
   }
@@ -265,14 +319,19 @@ export class DrawingService {
   drawTopFullTile(ctx: any, size: number, edgecolor: string, topcolor: string, blendBorder: boolean, startX : number, startY : number, widthRatio : number, heightRatio : number)
   {
     // Top Side
+    let xSubtractor = (1 - widthRatio) * (size / 2)
+    let ySubtractor = (1 - widthRatio) * (size / 4)
     let path : Vector2[] = [];
     path.push(new Vector2(size / 2 - 1 + startX, startY));
-    path.push(new Vector2(startX, size / 4 - 1 + startY));
-    path.push(new Vector2(startX, size / 4 + startY));
-    path.push(new Vector2((size / 2 - 1) - (1 - heightRatio) * (size / 2) + startX,
-     (size / 2 - 1) - (1 - heightRatio) * (size / 4) + startY));
-    path.push(new Vector2(size - 1 + startX, size / 4 + startY));
-    path.push(new Vector2(size - 1 + startX, size / 4 - 1 + startY));
+    path.push(new Vector2(xSubtractor + startX, 
+      size / 4 - 1 - ySubtractor + startY));
+    path.push(new Vector2(xSubtractor + startX, size / 4 - ySubtractor + startY));
+    path.push(new Vector2((size / 2 - 1) - (1 - heightRatio) * (size / 2) + xSubtractor + startX,
+     (size / 2 - 1) - (1 - heightRatio) * (size / 4) - ySubtractor + startY));
+    path.push(new Vector2((size - 1) - (size / 2) * (1 - heightRatio) + startX, 
+      (size / 4) - (1 - heightRatio) * (size / 4) + startY));
+    path.push(new Vector2((size - 1) - (size / 2) * (1 - heightRatio) + startX, 
+      (size / 4 - 1) - (1 - heightRatio) * (size / 4) + startY));
     path.push(new Vector2(size / 2 + startX, startY));
     path.push(new Vector2(size / 2 - 1 + startX, startY));
     this.drawPath(ctx, edgecolor, topcolor, path, blendBorder);
@@ -280,11 +339,14 @@ export class DrawingService {
 
   drawRightFullTile(ctx: any, size: number, edgecolor: string, sidecolor: string, blendBorder: boolean, startX : number, startY : number, ratio : number, wallRatio : number) 
   {
+    
+    let xSubtractor = (1 - wallRatio) * (size / 2)
+    let ySubtractor = (1 - wallRatio) * (size / 4)
     let path : Vector2[] = [];
     path.push(new Vector2(size - 1 + startX, size / 4 + startY));
     path.push(new Vector2(size - 1 + startX, (size / 4 * 3 - 1) - (size / 2) * (1 - ratio) + startY));
-    path.push(new Vector2(size / 2 + startX, (size - 1) - ((1 - ratio) * (size / 2)) + startY));
-    path.push(new Vector2(size / 2 + startX, size / 2 + startY));
+    path.push(new Vector2(size / 2 + xSubtractor + startX, (size - 1) - ((1 - ratio) * (size / 2)) - ySubtractor + startY));
+    path.push(new Vector2(size / 2 + xSubtractor + startX, size / 2 - ySubtractor + startY));
     path.push(new Vector2(size - 1 + startX, size / 4 + startY));
     this.drawPath(ctx, edgecolor, sidecolor, path, blendBorder);
   }
