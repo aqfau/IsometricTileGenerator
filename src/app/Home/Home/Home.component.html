@@ -3,7 +3,7 @@
     <h2>FormData</h2>
     <form class="form">
       <div class="form-group">
-        <label for="nameinput" class="form-label">Tile Name:</label>
+        <label for="nameinput" class="form-label bold">Tile Name:</label>
         <input type="text" class="form-input" #nameinput id="nameinput" name="nameinput" (change)="onChangeName()"
           value="New Isometric Tile">
       </div>
@@ -20,29 +20,34 @@
             value='#00ff00'>
         </div>
         <div>
-          <label class="form-label" for="top-face-color">Side Face Color:</label>
+          <label class="form-label" for="side-face-color">Side Face Color:</label>
           <input type="color" name="side-face-color" id="side-face-color" #sidefacecolor class="form-input"
             value="#005500">
         </div>
         <div>
-          <label class="form-label" for="top-face-color">Edge Color:</label>
+          <label class="form-label" for="edge-color">Edge Color:</label>
           <input type="color" name="edge-color" id="edge-color" #edgecolor class="form-input">
+        </div>
+        <div>
+          <label class="form-label" for="top-face-color">Blend Edges?</label>
+          <input #edgeblendCheck type="checkbox" name="edgeblend" id="edgeblend" #edgecolor class="form-input">
         </div>
       </div>
     </form>
     <div class="form-group">
       <button class="button" (click)="onClickDraw()">Draw</button>
+      <button class="button" (click)="onClickRandom()">Random</button>
     </div>
     <div class="container canvas-container border">
       <h2>Canvas</h2>
-      <canvas id="myCanvas" #canvas [width]="canvasSize" [height]="canvasSize" style="border:1px solid #000000;">
+      <canvas id="myCanvas" #canvas [width]="canvasSize * 4 + 80" [height]="canvasSize * 4 + 80" style="border:1px solid #000000;">
       </canvas>
     </div>
   </div>
   <div class="col2">
     <div class="container">
       <h2>Preview</h2>
-      <img width="100" height="100" #preview id="preview" [src]="filesource" alt="Preview Img">
+      <img width="300" height="300" #preview id="preview" [src]="filesource" alt="Preview Img">
     </div>
     <a *ngIf="canDownload" [href]="pngSrc" download="{{filename}}">
       <button class="button">Download</button>
