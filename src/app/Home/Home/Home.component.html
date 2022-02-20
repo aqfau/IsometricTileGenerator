@@ -1,0 +1,33 @@
+<div class="container">
+  <h2>FormData</h2>
+  <form class="form">
+    <div class="form-group">
+      <input type="number" class="form-input" #canvassize id="sizeinput" name="sizeinput" (change)="onChangeSize()" value="{{canvasSize}}">
+      <button type="button" (click)="onClickIncrement(-2)" class="button-increment">-</button>
+      <button type="button" (click)="onClickIncrement(2)" class="button-increment">+</button>
+    </div>
+    <div class="form-group">
+      <div>
+        <label class="form-label" for="top-face-color">Top Face Color:</label>
+        <input type="color" name="top-face-color" id="top-face-color" #topfacecolor class="form-input">
+      </div>
+      <div>
+        <label class="form-label" for="top-face-color">Side Face Color:</label>
+          <input type="color" name="side-face-color" id="side-face-color" #sidefacecolor class="form-input">
+      </div>
+      <div>
+        <label class="form-label" for="top-face-color">Edge Color:</label>
+          <input type="color" name="edge-color" id="edge-color" #edgecolor class="form-input">
+      </div>
+    </div>
+  </form>
+  <div class="form-group">
+    <button class="button" (click)="onClickDraw()">Draw</button>
+    <button class="button">Download</button>
+  </div>
+</div>
+<div class="container canvas-container">
+  <h2>Canvas</h2>
+  <canvas id="myCanvas" #canvas [width]="canvasSize" [height]="canvasSize" style="border:1px solid #000000;">
+  </canvas>
+</div>
